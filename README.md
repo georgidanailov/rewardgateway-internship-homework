@@ -49,4 +49,4 @@ php figures.php --type=shape --calculation=area --shape=circle --radius=10
 
 # System Requirements
 
-This application requires PHP Version 8.0 or later.
+These applications require PHP Version 8.0 or later.
