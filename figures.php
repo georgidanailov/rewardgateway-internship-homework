@@ -1,6 +1,7 @@
 <?php
 
-function calculateArea($shape, $dimensions) {
+function calculateArea($shape, $dimensions)
+{
     switch ($shape) {
         case 'triangle':
             return 0.5 * $dimensions['base'] * $dimensions['height'];
@@ -13,7 +14,8 @@ function calculateArea($shape, $dimensions) {
     }
 }
 
-function calculatePerimeter($shape, $dimensions) {
+function calculatePerimeter($shape, $dimensions)
+{
     switch ($shape) {
         case 'triangle':
             return $dimensions['side1'] + $dimensions['side2'] + $dimensions['side3'];
