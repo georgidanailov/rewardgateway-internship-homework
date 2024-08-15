@@ -18,7 +18,7 @@ The application is executed from the command line and accepts the following para
 ## 💻 Example Commands
 
 ### ➕ Addition
-```bash
+
 php calculator.php --type=arithmetic --operator=plus --param1=5 --param2=3
 
 # 📐 Lecture 1 Practice Figures App
@@ -44,6 +44,6 @@ The application is executed from the command line and accepts the following para
 ## 📏 Examples
 
 ### 🔵 Circle Area
-```bash
+
 php figures.php --type=shape --calculation=area --shape=circle --radius=10
 
