@@ -1,5 +1,5 @@
 <?php
-//komentarche
+
 $options = getopt("", [
     "type:",
     "operator:",
