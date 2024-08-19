@@ -1,6 +1,8 @@
-###Who Wants to Be a Millionaire CLI Game - Documentation
-##Overview
-#This PHP CLI (Command Line Interface) application is a simplified version of the popular game show "Who Wants to Be a
+Who Wants to Be a Millionaire CLI Game - Documentation
+
+Overview
+
+This PHP CLI (Command Line Interface) application is a simplified version of the popular game show "Who Wants to Be a
 Millionaire." Players answer a series of questions to win money, and the game supports multiple players, displaying a
 scoreboard after each correct answer and at the end of the session.
 
@@ -21,7 +23,7 @@ After one player finishes, the script asks if another player would like to play.
 If yes is entered, the game restarts for the new player.
 If no is entered, the game ends and displays the final scoreboard.
 
-#Example Command to Run in the Terminal
+Example Command to Run in the Terminal
 
 php millionaire.php
 
@@ -50,7 +52,7 @@ Your answer: A
 Incorrect answer. You lost.
 Would another player like to play? (yes/no): no
 
-#Dependencies
+Dependencies
 PHP 7.4 or later
 
 
