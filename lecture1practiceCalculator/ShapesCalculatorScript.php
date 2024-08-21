@@ -42,7 +42,7 @@ $options = getopt("", [
 ]);
 
 if (!isset($options['type']) || !isset($options['calculation']) || !isset($options['shape'])) {
-    echo "Failed attempt. Usage example: php figures.php --type=shape --calculation=area --shape=circle --radius=10\n";
+    echo "Failed attempt. Usage example: php ShapesCalculator.php --type=shape --calculation=area --shape=circle --radius=10\n";
     exit(1);
 }
 

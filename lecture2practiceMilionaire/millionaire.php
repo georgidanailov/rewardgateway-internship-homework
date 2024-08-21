@@ -140,7 +140,6 @@ function playGame(&$scoreboard)
 }
 
 $scoreboard = [];
-$playAgain = 'yes';
 
 do {
     playGame($scoreboard);

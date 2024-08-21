@@ -1,29 +1,4 @@
-<?php declare(strict_types=1);
-
-namespace GeorgiSimeonov\lecture1practiceCalculator;
-function performOperation(string $type, string $operator, float $param1, float $param2)
-{
-    if ($type === 'arithmetic') {
-        switch ($operator) {
-            case 'plus':
-                return $param1 + $param2;
-            case 'minus':
-                return $param1 - $param2;
-            case 'multiply':
-                return $param1 * $param2;
-            case 'divide':
-                if ($param2 != 0) {
-                    return $param1 / $param2;
-                } else {
-                    return "Error: Division by zero.";
-                }
-            default:
-                return "Error: Unknown operator.";
-        }
-    } else {
-        return "Error: Unknown type.";
-    }
-}
+<?php
 
 $options = getopt("", [
     "type:",
@@ -39,7 +14,30 @@ if (!isset($options['type']) || !isset($options['operator']) || !isset($options[
 
 $type = $options['type'];
 $operator = $options['operator'];
-$param1 = (float)$options['param1'];
-$param2 = (float)$options['param2'];
+$param1 = $options['param1'];
+$param2 = $options['param2'];
 
-echo performOperation($type, $operator, $param1, $param2);
+if ($type === 'arithmetic') {
+    switch ($operator) {
+        case 'plus':
+            echo $param1 + $param2;
+            break;
+        case 'minus':
+            echo $param1 - $param2;
+            break;
+        case 'multiply':
+            echo $param1 * $param2;
+            break;
+        case 'divide':
+            if ($param2 != 0) {
+                echo $param1 / $param2;
+            } else {
+                echo "Error: Division by zero.";
+            }
+            break;
+        default:
+            echo "Error: Unknown operator.";
+    }
+} else {
+    echo "Error: Unknown type.";
+}
