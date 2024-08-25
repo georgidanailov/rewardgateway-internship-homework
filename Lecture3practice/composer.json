@@ -1,0 +1,17 @@
+{
+  "name": "georgi.simeonov/lecture3practice",
+  "autoload": {
+    "psr-4": {
+      "GeorgiSimeonov\\Lecture3practice\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "georgidanailov",
+      "email": "demonhandz@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^11.3"
+  }
+}
