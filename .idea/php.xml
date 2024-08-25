@@ -10,6 +10,37 @@
     <option name="highlightLevel" value="WARNING" />
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/composer" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/Lecture3practice/vendor/myclabs/deep-copy" />
+    </include_path>
+  </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
