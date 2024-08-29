@@ -39,6 +39,60 @@
       <path value="$PROJECT_DIR$/Lecture3practice/vendor/sebastian/exporter" />
       <path value="$PROJECT_DIR$/Lecture3practice/vendor/nikic/php-parser" />
       <path value="$PROJECT_DIR$/Lecture3practice/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/composer" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/L3UnitTesting/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/phpunit/php-invoker" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/composer" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/myclabs/deep-copy" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
@@ -49,7 +103,8 @@
   </component>
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/Lecture3practice/vendor/autoload.php" phpunit_phar_path="" />
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/L4SchoolManagementSystem/phpunit.xml" custom_loader_path="$PROJECT_DIR$/L4SchoolManagementSystem/vendor/autoload.php" use_configuration_file="true" />
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/L3UnitTesting/vendor/autoload.php" phpunit_phar_path="" />
     </phpunit_settings>
   </component>
   <component name="PsalmOptionsConfiguration">

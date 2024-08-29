@@ -7,6 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace SebastianBergmann\CodeCoverage\Report\Html;
 
 use const DIRECTORY_SEPARATOR;
@@ -32,18 +33,18 @@ final class Facade
 
     public function __construct(string $generator = '', ?Colors $colors = null, ?Thresholds $thresholds = null, ?CustomCssFile $customCssFile = null)
     {
-        $this->generator     = $generator;
-        $this->colors        = $colors ?? Colors::default();
-        $this->thresholds    = $thresholds ?? Thresholds::default();
+        $this->generator = $generator;
+        $this->colors = $colors ?? Colors::default();
+        $this->thresholds = $thresholds ?? Thresholds::default();
         $this->customCssFile = $customCssFile ?? CustomCssFile::default();
-        $this->templatePath  = __DIR__ . '/Renderer/Template/';
+        $this->templatePath = __DIR__ . '/Renderer/Template/';
     }
 
     public function process(CodeCoverage $coverage, string $target): void
     {
         $target = $this->directory($target);
         $report = $coverage->getReport();
-        $date   = date('D M j G:i:s T Y');
+        $date = date('D M j G:i:s T Y');
 
         $dashboard = new Dashboard(
             $this->templatePath,
@@ -69,7 +70,7 @@ final class Facade
             $coverage->collectsBranchAndPathCoverage(),
         );
 
-        $directory->render($report, $target . 'index.html');
+        $directory->render($report, $target . 'index.php');
         $dashboard->render($report, $target . 'dashboard.html');
 
         foreach ($report as $node) {
@@ -78,7 +79,7 @@ final class Facade
             if ($node instanceof DirectoryNode) {
                 Filesystem::createDirectory($target . $id);
 
-                $directory->render($node, $target . $id . '/index.html');
+                $directory->render($node, $target . $id . '/index.php');
                 $dashboard->render($node, $target . $id . '/dashboard.html');
             } else {
                 $dir = dirname($target . $id);
@@ -121,11 +122,11 @@ final class Facade
 
         $template->setVar(
             [
-                'success-low'    => $this->colors->successLow(),
+                'success-low' => $this->colors->successLow(),
                 'success-medium' => $this->colors->successMedium(),
-                'success-high'   => $this->colors->successHigh(),
-                'warning'        => $this->colors->warning(),
-                'danger'         => $this->colors->danger(),
+                'success-high' => $this->colors->successHigh(),
+                'warning' => $this->colors->warning(),
+                'danger' => $this->colors->danger(),
             ],
         );
 
