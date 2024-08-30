@@ -170,3 +170,11 @@ body {
     font-size: 1.5rem;
     color: #E1B96F;
 }
+
+@media (max-width: 768px) {
+
+}
+
+@media (max-width: 480px) {
+
+}
