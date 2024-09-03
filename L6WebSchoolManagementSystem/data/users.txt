@@ -1,0 +1,1 @@
+a:3:{s:5:"admin";a:2:{s:8:"password";s:9:"adminpass";s:4:"role";s:5:"admin";}s:8:"teacher1";a:2:{s:8:"password";s:11:"teacherpass";s:4:"role";s:7:"teacher";}s:8:"student1";a:2:{s:8:"password";s:11:"studentpass";s:4:"role";s:7:"student";}}

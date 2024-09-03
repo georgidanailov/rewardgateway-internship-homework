@@ -1,0 +1,17 @@
+{
+  "name": "georgi.simeonov/l6web-school-management-system",
+  "autoload": {
+    "psr-4": {
+      "GeorgiSimeonov\\L6WebSchoolManagementSystem\\": ""
+    }
+  },
+  "authors": [
+    {
+      "name": "georgidanailov",
+      "email": "demonhandz@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^11.3"
+  }
+}
