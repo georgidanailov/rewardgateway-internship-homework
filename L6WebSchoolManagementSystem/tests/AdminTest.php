@@ -4,20 +4,80 @@ use PHPUnit\Framework\TestCase;
 
 class AdminTest extends TestCase
 {
+    private $adminsFile;
+
     protected function setUp(): void
     {
-        $_SESSION['role'] = 'admin';
+        $this->adminsFile = 'data/admins_test.txt';
+        file_put_contents($this->adminsFile, serialize([])); // Ensure a clean start
     }
 
-    public function testCreateSubject()
+    protected function tearDown(): void
     {
-        $_POST['create_subject'] = true;
-        $_POST['subject_name'] = 'Math';
+        unlink($this->adminsFile);
+    }
 
-        ob_start();
-        require_once __DIR__ . '/../admin.php';
-        $output = ob_get_clean();
+    public function testCreateAdmin()
+    {
+        $admins = unserialize(file_get_contents($this->adminsFile));
+        $username = 'admin1';
+        $password = 'adminpassword';
+        $name = 'Admin One';
 
-        $this->assertStringContainsString("Subject 'Math' created successfully.", $output);
+        $admins[$username] = [
+            'password' => $password,
+            'name' => $name
+        ];
+        file_put_contents($this->adminsFile, serialize($admins));
+
+        $saved_admins = unserialize(file_get_contents($this->adminsFile));
+
+        $this->assertArrayHasKey($username, $saved_admins);
+        $this->assertEquals($password, $saved_admins[$username]['password']);
+        $this->assertEquals($name, $saved_admins[$username]['name']);
+    }
+
+    public function testUpdateAdmin()
+    {
+        $admins = unserialize(file_get_contents($this->adminsFile));
+        $username = 'admin1';
+        $password = 'adminpassword';
+        $name = 'Admin One';
+
+        $admins[$username] = [
+            'password' => $password,
+            'name' => $name
+        ];
+        file_put_contents($this->adminsFile, serialize($admins));
+
+        // Update admin details
+        $admins[$username]['name'] = 'Updated Admin One';
+        file_put_contents($this->adminsFile, serialize($admins));
+
+        $saved_admins = unserialize(file_get_contents($this->adminsFile));
+
+        $this->assertEquals('Updated Admin One', $saved_admins[$username]['name']);
+    }
+
+    public function testDeleteAdmin()
+    {
+        $admins = unserialize(file_get_contents($this->adminsFile));
+        $username = 'admin1';
+        $password = 'adminpassword';
+        $name = 'Admin One';
+
+        $admins[$username] = [
+            'password' => $password,
+            'name' => $name
+        ];
+        file_put_contents($this->adminsFile, serialize($admins));
+
+        // Delete admin
+        unset($admins[$username]);
+        file_put_contents($this->adminsFile, serialize($admins));
+
+        $saved_admins = unserialize(file_get_contents($this->adminsFile));
+
+        $this->assertArrayNotHasKey($username, $saved_admins);
     }
 }

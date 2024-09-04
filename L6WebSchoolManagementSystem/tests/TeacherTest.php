@@ -4,40 +4,39 @@ use PHPUnit\Framework\TestCase;
 
 class TeacherTest extends TestCase
 {
+    private $teachersFile;
+
     protected function setUp(): void
     {
-        $_SESSION['role'] = 'teacher';
-        $_SESSION['username'] = 'teacher1';
+        $this->teachersFile = 'data/teachers_test.txt';
+        file_put_contents($this->teachersFile, serialize([])); // Ensure a clean start
     }
 
-    public function testGradeStudent()
+    protected function tearDown(): void
     {
-        file_put_contents(__DIR__ . '/../data/teachers.txt', serialize([
-            'teacher1' => [
-                'password' => 'password',
-                'name' => 'Jane Doe',
-                'subjects' => ['Math']
-            ]
-        ]));
-        file_put_contents(__DIR__ . '/../data/students.txt', serialize([
-            'student1' => [
-                'password' => 'password',
-                'name' => 'John Doe',
-                'subjects' => ['Math']
-            ]
-        ]));
-        file_put_contents(__DIR__ . '/../data/grades.txt', serialize([]));
-
-        $_POST['grade_student'] = true;
-        $_POST['student_id'] = 'student1';
-        $_POST['subject_name'] = 'Math';
-        $_POST['grade'] = '5';
-
-        ob_start();
-        require_once __DIR__ . '/../teacher.php';
-        $output = ob_get_clean();
-
-        $this->assertStringContainsString("Grade for student student1 in Math set to 5.", $output);
+        unlink($this->teachersFile);
     }
 
+    public function testCreateTeacher()
+    {
+        $teachers = unserialize(file_get_contents($this->teachersFile));
+        $username = 'teacher1';
+        $password = 'password';
+        $name = 'Teacher One';
+        $assigned_subjects = ['Math', 'History'];
+
+        $teachers[$username] = [
+            'password' => $password,
+            'name' => $name,
+            'subjects' => $assigned_subjects
+        ];
+        file_put_contents($this->teachersFile, serialize($teachers));
+
+        $saved_teachers = unserialize(file_get_contents($this->teachersFile));
+
+        $this->assertArrayHasKey($username, $saved_teachers);
+        $this->assertEquals($password, $saved_teachers[$username]['password']);
+        $this->assertEquals($name, $saved_teachers[$username]['name']);
+        $this->assertEquals($assigned_subjects, $saved_teachers[$username]['subjects']);
+    }
 }

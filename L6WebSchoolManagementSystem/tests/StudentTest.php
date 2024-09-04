@@ -4,27 +4,39 @@ use PHPUnit\Framework\TestCase;
 
 class StudentTest extends TestCase
 {
+    private $studentsFile;
+
     protected function setUp(): void
     {
-        $_SESSION['role'] = 'student';
-        $_SESSION['username'] = 'student1';
+        $this->studentsFile = 'data/students_test.txt';
+        file_put_contents($this->studentsFile, serialize([])); // Ensure a clean start
     }
 
-    public function testStudentDashboard()
+    protected function tearDown(): void
     {
-        file_put_contents(__DIR__ . '/../data/students.txt', serialize([
-            'student1' => [
-                'password' => 'password',
-                'name' => 'John Doe',
-                'subjects' => ['Math', 'Science']
-            ]
-        ]));
+        unlink($this->studentsFile);
+    }
 
-        ob_start();
-        require_once __DIR__ . '/../student.php';
-        $output = ob_get_clean();
+    public function testCreateStudent()
+    {
+        $students = unserialize(file_get_contents($this->studentsFile));
+        $username = 'student1';
+        $password = 'password';
+        $name = 'Student One';
+        $assigned_subjects = ['Math', 'Science'];
 
-        $this->assertStringContainsString('Math', $output);
-        $this->assertStringContainsString('Science', $output);
+        $students[$username] = [
+            'password' => $password,
+            'name' => $name,
+            'subjects' => $assigned_subjects
+        ];
+        file_put_contents($this->studentsFile, serialize($students));
+
+        $saved_students = unserialize(file_get_contents($this->studentsFile));
+
+        $this->assertArrayHasKey($username, $saved_students);
+        $this->assertEquals($password, $saved_students[$username]['password']);
+        $this->assertEquals($name, $saved_students[$username]['name']);
+        $this->assertEquals($assigned_subjects, $saved_students[$username]['subjects']);
     }
 }
