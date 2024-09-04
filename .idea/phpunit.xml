@@ -4,8 +4,8 @@
     <option name="directories">
       <list>
         <option value="$PROJECT_DIR$/Lecture3practice/tests" />
-        <option value="$PROJECT_DIR$/L4SchoolManagementSystem/tests" />
         <option value="$PROJECT_DIR$/L3UnitTesting/tests" />
+        <option value="$PROJECT_DIR$/L4SchoolManagementSystem/tests" />
       </list>
     </option>
   </component>
