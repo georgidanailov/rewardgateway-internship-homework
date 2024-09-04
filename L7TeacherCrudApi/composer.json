@@ -1,0 +1,17 @@
+{
+  "name": "georgi.simeonov/l7teacher-crud-api",
+  "autoload": {
+    "psr-4": {
+      "GeorgiSimeonov\\L7teacherCrudApi\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "georgidanailov",
+      "email": "demonhandz@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^9"
+  }
+}
