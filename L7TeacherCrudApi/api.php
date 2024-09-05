@@ -1,5 +1,13 @@
 <?php
 
+function sendResponse($status, $data)
+{
+    header("Content-Type: application/json");
+    http_response_code($status);
+    echo json_encode($data);
+    exit;
+}
+
 function getTeachers()
 {
     $teachers = readJsonFile();
@@ -81,12 +89,4 @@ function readJsonFile($filename = 'teachers.json')
 function writeJsonFile($data, $filename = 'teachers.json')
 {
     file_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT));
-}
-
-function sendResponse($status, $data)
-{
-    header("Content-Type: application/json");
-    http_response_code($status);
-    echo json_encode($data);
-    exit;
 }
