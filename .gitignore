@@ -1,0 +1,9 @@
+L3UnitTesting/vendor
+L4SchoolManagementSystem/vendor
+L4SchoolManagementSystem/.phpunit.result.cache
+L6WebSchoolManagementSystem/vendor
+L6WebSchoolManagementSystem/.phpunit.result.cache
+L7TeacherCrudApi/vendor
+L7TeacherCrudApi/.phpunit.result.cache
+.idea
+.DS_Store
