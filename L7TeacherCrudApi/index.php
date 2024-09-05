@@ -51,6 +51,7 @@ switch ($method) {
     case 'DELETE':
         if ($resource === 'teachers' && $id) {
             deleteTeacher($id);
+            sendResponse(204, ['success' => '204']);
         } else {
             sendResponse(404, ['error' => 'Resource not found']);
         }
