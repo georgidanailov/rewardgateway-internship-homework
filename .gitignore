@@ -7,3 +7,5 @@ L7TeacherCrudApi/vendor
 L7TeacherCrudApi/.phpunit.result.cache
 .idea
 .DS_Store
+L8SportsManagementSystem/.env
+L8SportsManagementSystem/vendor
