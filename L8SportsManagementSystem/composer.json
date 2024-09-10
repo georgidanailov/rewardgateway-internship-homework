@@ -1,0 +1,17 @@
+{
+    "name": "georgi.simeonov/l8sports-management-system",
+    "autoload": {
+        "psr-4": {
+            "GeorgiSimeonov\\L8sportsManagementSystem\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "georgidanailov",
+            "email": "demonhandz@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}
