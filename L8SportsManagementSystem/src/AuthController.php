@@ -7,7 +7,7 @@ class AuthController
         if ($username === 'admin' && $password === 'password') {
             session_start();
             $_SESSION['loggedin'] = true;
-            header('Location: /dashboard.php');
+            header('Location: /src/dashboard.php');
         } else {
             echo "Invalid credentials";
         }
@@ -15,9 +15,8 @@ class AuthController
 
     public function logout()
     {
-        session_start();
         session_destroy();
-        header('Location: /login.php');
+        header('Location: login.php');
     }
 }
 

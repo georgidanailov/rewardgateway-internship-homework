@@ -1,7 +1,13 @@
 <?php
 
-require_once '../../config/Database.php';
-require_once '../Models/Player.php';
+
+require_once '../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../'); // Adjust path as necessary
+$dotenv->load();
+
+require_once 'Database.php';
+require_once 'Player.php';
 
 $database = new Database();
 $conn = $database->getConnection();
