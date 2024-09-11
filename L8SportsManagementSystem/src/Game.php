@@ -1,6 +1,10 @@
 <?php
 
-require_once '../../config/Database.php';
+require_once '../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../'); // Adjust path as necessary
+$dotenv->load();
+require_once 'Database.php';
 
 $database = new Database();
 $conn = $database->getConnection();

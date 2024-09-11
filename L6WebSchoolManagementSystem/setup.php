@@ -1,4 +1,5 @@
 <?php
+
 $usersFile = 'data/users.txt';
 $subjectsFile = 'data/subjects.txt';
 $teachersFile = 'data/teachers.txt';
