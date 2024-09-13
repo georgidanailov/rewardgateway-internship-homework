@@ -1,90 +1,314 @@
-SQL Script for Setting Up the Database
-The following SQL script will create a database named sports_management, create the necessary tables, and set up
-relationships between teams, players, and games.
+# Sports Team and Match Management System
 
--- 1. Create Database
+---
 
-CREATE DATABASE IF NOT EXISTS sports_management;
+## Overview
 
--- 2. Use the database
+The **Sports Team and Match Management System** is a web-based application that allows users to manage teams, players,
+and games. It includes features such as creating teams, adding players to teams, scheduling matches between teams, and
+generating statistics related to team performance. The system is built with a RESTful API to support these operations
+and a front-end with HTML forms for manual data input.
 
-USE sports_management;
+---
 
--- 3. Create Teams table
+## Technologies Used
 
-CREATE TABLE teams (
-id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(255) NOT NULL,
-city VARCHAR(255) NOT NULL
-);
+- **PHP**: Back-end logic and API implementation.
+- **MySQL**: Relational database for storing teams, players, and games.
+- **HTML/CSS**: Front-end interface for users to interact with the system.
+- **JavaScript**: Optional, for dynamic actions on the front-end (e.g., form validation).
+- **PHPUnit**: Used for unit testing API endpoints.
 
--- 4. Create Players table
+---
 
-CREATE TABLE players (
+## Project Setup
 
-id INT AUTO_INCREMENT PRIMARY KEY,
+### Prerequisites
 
-name VARCHAR(255) NOT NULL,
+1. **PHP 7.4 or higher**
+2. **MySQL 5.7 or higher**
+3. **Apache or Nginx Web Server**
+4. **Composer** (Optional if advanced PHP packages are used)
 
-age INT NOT NULL,
+### Steps to Set Up
 
-position ENUM('Forward', 'Midfielder', 'Defender', 'Goalkeeper') NOT NULL,
+1. **Clone the Repository**:
+   ```bash
+   git clone <repository-url>
+   cd sports_management_system
 
-team_id INT,
+Database Setup:
 
-FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE SET NULL
-);
+Create a .env file to store the database configuration:
 
--- 5. Create Games table
-CREATE TABLE games (
+Import the provided SQL script (sports_management.sql) to set up the MySQL database:
 
-id INT AUTO_INCREMENT PRIMARY KEY,
+mysql -u username -p sports_management < sports_management.sql
 
-team1_id INT,
+Run the Project
 
-team2_id INT,
+# API Documentation
 
-team1_score INT NOT NULL,
+The system provides RESTful API endpoints to manage teams, players, and games. All requests and responses use JSON
+format.
 
-team2_score INT NOT NULL,
+---
 
-game_date DATE NOT NULL,
+## Teams API
 
-FOREIGN KEY (team1_id) REFERENCES teams(id) ON DELETE CASCADE,
+GET /teams`
+Description**: Retrieve a list of all teams.
 
-FOREIGN KEY (team2_id) REFERENCES teams(id) ON DELETE CASCADE
-);
+- **Response Example**:
+  `
 
--- 6. Insert sample data into the Teams table
+  {
+  "id": 1,
+  "name": "Team A",
+  "city": "New York"
+  },
+  {
+  "id": 2,
+  "name": "Team B",
+  "city": "Los Angeles"
+  }
 
-INSERT INTO teams (name, city) VALUES
+GET /teams/{id}
+Description: Retrieve details of a specific team by ID.
+Response Example:
+json
+Copy code
+{
+"id": 1,
+"name": "Team A",
+"city": "New York"
+}
 
-('Team A', 'New York'),
+POST /teams
+Description: Create a new team.
+Request Body:
+json
+Copy code
+{
+"name": "Team C",
+"city": "Chicago"
+}
 
-('Team B', 'Los Angeles'),
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Team created successfully"
+}
 
-('Team C', 'Chicago');
+PUT /teams/{id}
+Description: Update an existing team.
+Request Body:
+json
+Copy code
+{
+"name": "Team C Updated",
+"city": "Chicago"
+}
 
--- 7. Insert sample data into the Players table
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Team updated successfully"
+}
 
-INSERT INTO players (name, age, position, team_id) VALUES
+DELETE /teams/{id}
+Description: Delete a team by ID.
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Team deleted successfully"
+}
 
-('Player 1', 24, 'Forward', 1),
+Players API
+GET /players
+Description: Retrieve a list of all players.
+Response Example:
+json
+Copy code
 
-('Player 2', 28, 'Midfielder', 1),
+{
+"id": 1,
+"name": "Player 1",
+"age": 24,
+"position": "Forward",
+"team_id": 1
+},
 
-('Player 3', 21, 'Defender', 2),
+{
+"id": 2,
+"name": "Player 2",
+"age": 28,
+"position": "Midfielder",
+"team_id": 1
+}
 
-('Player 4', 30, 'Goalkeeper', 2),
+GET /players/{id}
+Description: Retrieve details of a specific player by ID.
+Response Example:
+json
+Copy code
+{
+"id": 1,
+"name": "Player 1",
+"age": 24,
+"position": "Forward",
+"team_id": 1
+}
 
-('Player 5', 26, 'Forward', 3);
+POST /players
+Description: Add a new player to a team.
+Request Body:
+json
+Copy code
+{
+"name": "Player 3",
+"age": 26,
+"position": "Defender",
+"team_id": 2
+}
 
--- 8. Insert sample data into the Games table
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Player added successfully"
+}
 
-INSERT INTO games (team1_id, team2_id, team1_score, team2_score, game_date) VALUES
+PUT /players/{id}
+Description: Update a player’s details.
+Request Body:
+json
+Copy code
+{
+"name": "Player 3 Updated",
+"age": 27,
+"position": "Defender",
+"team_id": 2
+}
 
-(1, 2, 3, 2, '2024-01-15'),
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Player updated successfully"
+}
 
-(2, 3, 1, 0, '2024-02-10'),
+DELETE /players/{id}
+Description: Remove a player by ID.
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Player deleted successfully"
+}
 
-(3, 1, 2, 2, '2024-03-05');
+Games API
+GET /games
+Description: Retrieve a list of all games.
+Response Example:
+json
+Copy code
+
+{
+"id": 1,
+"team1_id": 1,
+"team2_id": 2,
+"team1_score": 3,
+"team2_score": 2,
+"game_date": "2024-01-15"
+},
+{
+"id": 2,
+"team1_id": 2,
+"team2_id": 3,
+"team1_score": 1,
+"team2_score": 0,
+"game_date": "2024-02-10"
+}
+
+GET /games/{id}
+Description: Retrieve details of a specific game by ID.
+Response Example:
+json
+Copy code
+
+{
+"id": 1,
+"team1_id": 1,
+"team2_id": 2,
+"team1_score": 3,
+"team2_score": 2,
+"game_date": "2024-01-15"
+}
+
+POST /games
+Description: Create a new game between two teams.
+Request Body:
+json
+Copy code
+{
+"team1_id": 1,
+"team2_id": 2,
+"team1_score": 3,
+"team2_score": 2,
+"game_date": "2024-01-15"
+}
+
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Game created successfully"
+}
+
+PUT /games/{id}
+Description: Update a game’s result.
+Request Body:
+json
+Copy code
+{
+"team1_score": 2,
+"team2_score": 2,
+"game_date": "2024-01-20"
+}
+
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Game updated successfully"
+}
+
+DELETE /games/{id}
+Description: Delete a game by ID.
+Response Example:
+json
+Copy code
+{
+"success": true,
+"message": "Game deleted successfully"
+}
+
+Common HTTP Responses
+200 OK: The request was successful.
+201 Created: The resource was successfully created.
+400 Bad Request: The request could not be understood or was missing required parameters.
+404 Not Found: The resource could not be found.
+500 Internal Server Error: An error occurred on the server.
+
