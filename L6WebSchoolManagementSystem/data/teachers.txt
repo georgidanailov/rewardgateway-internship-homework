@@ -1,1 +1,1 @@
-a:1:{s:8:"teacher1";a:3:{s:8:"password";s:8:"password";s:4:"name";s:8:"Jane Doe";s:8:"subjects";a:1:{i:0;s:4:"Math";}}}
+a:2:{s:8:"teacher1";a:3:{s:8:"password";s:8:"password";s:4:"name";s:8:"Jane Doe";s:8:"subjects";a:1:{i:0;s:4:"Math";}}s:8:"teacher2";a:3:{s:8:"password";s:11:"teacherpass";s:4:"name";s:12:"Ivan Marinov";s:8:"subjects";a:2:{i:0;s:4:"Math";i:1;s:7:"English";}}}
