@@ -10,3 +10,5 @@ L7TeacherCrudApi/.phpunit.result.cache
 L8SportsManagementSystem/.env
 L8SportsManagementSystem/vendor
 L8SportsManagementSystem/.phpunit.result.cache
+L9SymfonyCrudApi/.env
+L9SymfonyCrudApi/.env.test
