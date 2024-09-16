@@ -3,11 +3,16 @@
 {% block title %}Edit Genre{% endblock %}
 
 {% block body %}
-    <h1>Edit Genre</h1>
+    <div class="container mt-5">
+        <h1 class="mb-4">Edit Genre</h1>
 
-    {{ include('genre/_form.html.twig', {'button_label': 'Update'}) }}
+        <div class="card shadow-sm p-4 mb-4 bg-white rounded">
+            {{ include('genre/_form.html.twig', {'button_label': 'Update'}) }}
+        </div>
 
-    <a href="{{ path('app_genre_index') }}">back to list</a>
-
-    {{ include('genre/_delete_form.html.twig') }}
+        <div class="d-flex justify-content-start mt-3">
+            <a href="{{ path('app_genre_index') }}" class="btn btn-secondary me-2">Back to list</a>
+            {{ include('genre/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

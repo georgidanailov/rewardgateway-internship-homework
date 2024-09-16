@@ -3,22 +3,28 @@
 namespace App\Controller;
 
 use App\Entity\Book;
-use App\Form\BookType;
 use App\Repository\BookRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/book')]
-final class BookController extends AbstractController
+class BookController extends AbstractController
 {
     #[Route(name: 'app_book_index', methods: ['GET'])]
-    public function index(BookRepository $bookRepository): Response
+    public function index(Request $request, BookRepository $bookRepository): Response
     {
+        $searchTerm = $request->query->get('query', '');
+
+        if ($searchTerm) {
+            $books = $bookRepository->findBySearchTerm($searchTerm);
+        } else {
+            $books = $bookRepository->findAll();
+        }
+
         return $this->render('book/index.html.twig', [
-            'books' => $bookRepository->findAll(),
+            'books' => $books,
         ]);
     }
 
@@ -71,7 +77,7 @@ final class BookController extends AbstractController
     #[Route('/{id}', name: 'app_book_delete', methods: ['POST'])]
     public function delete(Request $request, Book $book, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
             $entityManager->remove($book);
             $entityManager->flush();
         }

@@ -18,10 +18,10 @@ class GenreType extends AbstractType
             ->add('description')
             ->add('books', EntityType::class, [
                 'class' => Book::class,
-                'choice_label' => 'id',
+                'choice_label' => 'title',
                 'multiple' => true,
-            ])
-        ;
+                'expanded' => true,  // Render as checkboxes
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -31,3 +31,4 @@ class GenreType extends AbstractType
         ]);
     }
 }
+

@@ -1,4 +1,29 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="mb-3">
+    {{ form_label(form.name, 'Editor Name', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.name) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.editorial_number, 'Editorial Number', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.editorial_number, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.editorial_number) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.specialty, 'Specialty', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.specialty, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.specialty) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.books, 'Books', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.books, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.books) }}
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
 {{ form_end(form) }}

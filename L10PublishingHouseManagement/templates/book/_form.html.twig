@@ -1,4 +1,47 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="mb-3">
+    {{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.title) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.isbn, 'ISBN', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.isbn, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.isbn) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.publication_year, 'Publication Year', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.publication_year, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.publication_year) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.description) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.author, 'Author', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.author, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.author) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.editors, 'Editors', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.editors, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.editors) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.genres, 'Genres', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.genres, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.genres) }}
+</div>
+
+<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
 {{ form_end(form) }}

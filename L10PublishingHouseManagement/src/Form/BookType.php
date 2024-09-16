@@ -9,6 +9,7 @@ use App\Entity\Genre;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BookType extends AbstractType
@@ -19,21 +20,26 @@ class BookType extends AbstractType
             ->add('title')
             ->add('isbn')
             ->add('publication_year')
+            ->add('description', TextareaType::class, [
+                'required' => false, // Description can be optional
+                'attr' => ['class' => 'form-control', 'rows' => 5],
+            ])
             ->add('author', EntityType::class, [
                 'class' => Author::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('editors', EntityType::class, [
                 'class' => Editor::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
+                'required' => false,
             ])
             ->add('genres', EntityType::class, [
                 'class' => Genre::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
-            ])
-        ;
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -43,3 +49,4 @@ class BookType extends AbstractType
         ]);
     }
 }
+

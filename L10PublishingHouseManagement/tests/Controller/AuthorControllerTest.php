@@ -3,123 +3,113 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Author;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Doctrine\ORM\EntityManagerInterface;
 
 final class AuthorControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private EntityManagerInterface $manager;
-    private EntityRepository $repository;
-    private string $path = '/author/';
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        $this->manager = static::getContainer()->get('doctrine')->getManager();
-        $this->repository = $this->manager->getRepository(Author::class);
+        $this->manager = static::getContainer()->get(EntityManagerInterface::class);
 
-        foreach ($this->repository->findAll() as $object) {
-            $this->manager->remove($object);
+        // Clean up database before each test
+        foreach ($this->manager->getRepository(Author::class)->findAll() as $author) {
+            $this->manager->remove($author);
         }
-
         $this->manager->flush();
     }
 
     public function testIndex(): void
     {
-        $this->client->followRedirects();
-        $crawler = $this->client->request('GET', $this->path);
-
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Author index');
-
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first());
+        // Check the response of the index page
+        $this->client->request('GET', '/author');
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('h1', 'Author index');
     }
 
     public function testNew(): void
     {
-        $this->markTestIncomplete();
-        $this->client->request('GET', sprintf('%snew', $this->path));
+        $crawler = $this->client->request('GET', '/author/new');
+        self::assertResponseIsSuccessful();
 
-        self::assertResponseStatusCodeSame(200);
-
+        // Submit the form
         $this->client->submitForm('Save', [
-            'author[name]' => 'Testing',
-            'author[birth_year]' => 'Testing',
-            'author[nationality]' => 'Testing',
+            'author[name]' => 'Test Author',
+            'author[birth_year]' => 1980,
+            'author[nationality]' => 'Test Nationality',
         ]);
 
-        self::assertResponseRedirects($this->path);
+        // Follow the redirection after the form submission
+        self::assertResponseRedirects('/author');
+        $this->client->followRedirect();
 
-        self::assertSame(1, $this->repository->count([]));
-    }
-
-    public function testShow(): void
-    {
-        $this->markTestIncomplete();
-        $fixture = new Author();
-        $fixture->setName('My Title');
-        $fixture->setBirth_year('My Title');
-        $fixture->setNationality('My Title');
-
-        $this->manager->persist($fixture);
-        $this->manager->flush();
-
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
-
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Author');
-
-        // Use assertions to check that the properties are properly displayed.
+        // Ensure that the new author is added
+        $newAuthor = $this->manager->getRepository(Author::class)->findOneBy(['name' => 'Test Author']);
+        self::assertNotNull($newAuthor);
+        self::assertSame(1980, $newAuthor->getBirthYear());
+        self::assertSame('Test Nationality', $newAuthor->getNationality());
     }
 
     public function testEdit(): void
     {
-        $this->markTestIncomplete();
-        $fixture = new Author();
-        $fixture->setName('Value');
-        $fixture->setBirth_year('Value');
-        $fixture->setNationality('Value');
-
-        $this->manager->persist($fixture);
+        // Create and persist a new author
+        $author = new Author();
+        $author->setName('Test Author');
+        $author->setBirthYear(1980);
+        $author->setNationality('Test Nationality');
+        $this->manager->persist($author);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
+        // Request the edit page for the author
+        $this->client->request('GET', '/author/' . $author->getId() . '/edit');
+        self::assertResponseIsSuccessful();
 
+        // Submit the form with updated values
         $this->client->submitForm('Update', [
-            'author[name]' => 'Something New',
-            'author[birth_year]' => 'Something New',
-            'author[nationality]' => 'Something New',
+            'author[name]' => 'Updated Author',
+            'author[birth_year]' => 1990,
+            'author[nationality]' => 'Updated Nationality',
         ]);
 
-        self::assertResponseRedirects('/author/');
+        // Follow the redirection after the form submission
+        self::assertResponseRedirects('/author');
+        $this->client->followRedirect();
 
-        $fixture = $this->repository->findAll();
-
-        self::assertSame('Something New', $fixture[0]->getName());
-        self::assertSame('Something New', $fixture[0]->getBirth_year());
-        self::assertSame('Something New', $fixture[0]->getNationality());
+        // Ensure the author's data has been updated
+        $updatedAuthor = $this->manager->getRepository(Author::class)->find($author->getId());
+        self::assertSame('Updated Author', $updatedAuthor->getName());
+        self::assertSame(1990, $updatedAuthor->getBirthYear());
+        self::assertSame('Updated Nationality', $updatedAuthor->getNationality());
     }
 
-    public function testRemove(): void
+    public function testDelete(): void
     {
-        $this->markTestIncomplete();
-        $fixture = new Author();
-        $fixture->setName('Value');
-        $fixture->setBirth_year('Value');
-        $fixture->setNationality('Value');
-
-        $this->manager->persist($fixture);
+        // Create and persist a new author
+        $author = new Author();
+        $author->setName('Test Author');
+        $author->setBirthYear(1980);
+        $author->setNationality('Test Nationality');
+        $this->manager->persist($author);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
+        // Request the delete action
+        $this->client->request('GET', '/author/' . $author->getId());
+        self::assertResponseIsSuccessful();
+
+        // Submit the delete form
         $this->client->submitForm('Delete');
 
-        self::assertResponseRedirects('/author/');
-        self::assertSame(0, $this->repository->count([]));
+        // Follow the redirection after deletion
+        self::assertResponseRedirects('/author');
+        $this->client->followRedirect();
+
+        // Ensure the author has been deleted
+        $deletedAuthor = $this->manager->getRepository(Author::class)->find($author->getId());
+        self::assertNull($deletedAuthor);
     }
 }

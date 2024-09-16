@@ -5,8 +5,9 @@
 {% block body %}
     <h1>Author</h1>
 
-    <table class="table">
-        <tbody>
+    <div class="card shadow-sm p-4 mb-4 bg-white rounded">
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ author.id }}</td>
@@ -23,12 +24,13 @@
                 <th>Nationality</th>
                 <td>{{ author.nationality }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 
-    <a href="{{ path('app_author_index') }}">back to list</a>
+    <a href="{{ path('app_author_index') }}" class="btn btn-secondary">back to list</a>
 
-    <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
+    <a href="{{ path('app_author_edit', {'id': author.id}) }}" class="btn btn-light">edit</a>
 
     {{ include('author/_delete_form.html.twig') }}
 {% endblock %}

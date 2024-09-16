@@ -24,19 +24,16 @@ class Book
     #[ORM\Column]
     private ?int $publication_year = null;
 
+    #[ORM\Column(type: "text", nullable: true)]
+    private ?string $description = null;
+
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Author $author = null;
 
-    /**
-     * @var Collection<int, Editor>
-     */
     #[ORM\ManyToMany(targetEntity: Editor::class, mappedBy: 'books')]
     private Collection $editors;
 
-    /**
-     * @var Collection<int, Genre>
-     */
     #[ORM\ManyToMany(targetEntity: Genre::class, mappedBy: 'books')]
     private Collection $genres;
 
@@ -56,7 +53,7 @@ class Book
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -68,7 +65,7 @@ class Book
         return $this->isbn;
     }
 
-    public function setIsbn(string $isbn): static
+    public function setIsbn(string $isbn): self
     {
         $this->isbn = $isbn;
 
@@ -80,9 +77,21 @@ class Book
         return $this->publication_year;
     }
 
-    public function setPublicationYear(int $publication_year): static
+    public function setPublicationYear(int $publication_year): self
     {
         $this->publication_year = $publication_year;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -92,22 +101,19 @@ class Book
         return $this->author;
     }
 
-    public function setAuthor(?Author $author): static
+    public function setAuthor(?Author $author): self
     {
         $this->author = $author;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Editor>
-     */
     public function getEditors(): Collection
     {
         return $this->editors;
     }
 
-    public function addEditor(Editor $editor): static
+    public function addEditor(Editor $editor): self
     {
         if (!$this->editors->contains($editor)) {
             $this->editors->add($editor);
@@ -117,7 +123,7 @@ class Book
         return $this;
     }
 
-    public function removeEditor(Editor $editor): static
+    public function removeEditor(Editor $editor): self
     {
         if ($this->editors->removeElement($editor)) {
             $editor->removeBook($this);
@@ -126,15 +132,12 @@ class Book
         return $this;
     }
 
-    /**
-     * @return Collection<int, Genre>
-     */
     public function getGenres(): Collection
     {
         return $this->genres;
     }
 
-    public function addGenre(Genre $genre): static
+    public function addGenre(Genre $genre): self
     {
         if (!$this->genres->contains($genre)) {
             $this->genres->add($genre);
@@ -144,7 +147,7 @@ class Book
         return $this;
     }
 
-    public function removeGenre(Genre $genre): static
+    public function removeGenre(Genre $genre): self
     {
         if ($this->genres->removeElement($genre)) {
             $genre->removeBook($this);

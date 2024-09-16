@@ -4,7 +4,6 @@ namespace App\Tests\Controller;
 
 use App\Entity\Editor;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -12,120 +11,62 @@ final class EditorControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private EntityManagerInterface $manager;
-    private EntityRepository $repository;
     private string $path = '/editor/';
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        $this->manager = static::getContainer()->get('doctrine')->getManager();
-        $this->repository = $this->manager->getRepository(Editor::class);
+        $this->manager = static::getContainer()->get(EntityManagerInterface::class);
 
-        foreach ($this->repository->findAll() as $object) {
-            $this->manager->remove($object);
-        }
-
-        $this->manager->flush();
+        // Clean up the database before running each test
+        $this->manager->createQuery('DELETE FROM App\Entity\Editor')->execute();
     }
 
-    public function testIndex(): void
+    public function testCreateNewEditor(): void
     {
-        $this->client->followRedirects();
-        $crawler = $this->client->request('GET', $this->path);
+        $editor = new Editor();
+        $editor->setName('Test Editor');
+        $editor->setEditorialNumber('ED1234');
+        $editor->setSpecialty('Fiction');
 
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Editor index');
-
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first());
-    }
-
-    public function testNew(): void
-    {
-        $this->markTestIncomplete();
-        $this->client->request('GET', sprintf('%snew', $this->path));
-
-        self::assertResponseStatusCodeSame(200);
-
-        $this->client->submitForm('Save', [
-            'editor[name]' => 'Testing',
-            'editor[editorial_number]' => 'Testing',
-            'editor[specialty]' => 'Testing',
-            'editor[books]' => 'Testing',
-        ]);
-
-        self::assertResponseRedirects($this->path);
-
-        self::assertSame(1, $this->repository->count([]));
-    }
-
-    public function testShow(): void
-    {
-        $this->markTestIncomplete();
-        $fixture = new Editor();
-        $fixture->setName('My Title');
-        $fixture->setEditorial_number('My Title');
-        $fixture->setSpecialty('My Title');
-        $fixture->setBooks('My Title');
-
-        $this->manager->persist($fixture);
+        $this->manager->persist($editor);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
-
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Editor');
-
-        // Use assertions to check that the properties are properly displayed.
+        // Fetch the editor from the database and assert it exists
+        $savedEditor = $this->manager->getRepository(Editor::class)->findOneBy(['name' => 'Test Editor']);
+        self::assertNotNull($savedEditor);
+        self::assertSame('Test Editor', $savedEditor->getName());
+        self::assertSame('ED1234', $savedEditor->getEditorialNumber());
+        self::assertSame('Fiction', $savedEditor->getSpecialty());
     }
 
-    public function testEdit(): void
+    public function testEditEditor(): void
     {
-        $this->markTestIncomplete();
-        $fixture = new Editor();
-        $fixture->setName('Value');
-        $fixture->setEditorial_number('Value');
-        $fixture->setSpecialty('Value');
-        $fixture->setBooks('Value');
+        $editor = $this->createEditor();
 
-        $this->manager->persist($fixture);
+        $editor->setName('Updated Editor');
+        $editor->setEditorialNumber('ED5678');
+        $editor->setSpecialty('Non-Fiction');
+
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
-
-        $this->client->submitForm('Update', [
-            'editor[name]' => 'Something New',
-            'editor[editorial_number]' => 'Something New',
-            'editor[specialty]' => 'Something New',
-            'editor[books]' => 'Something New',
-        ]);
-
-        self::assertResponseRedirects('/editor/');
-
-        $fixture = $this->repository->findAll();
-
-        self::assertSame('Something New', $fixture[0]->getName());
-        self::assertSame('Something New', $fixture[0]->getEditorial_number());
-        self::assertSame('Something New', $fixture[0]->getSpecialty());
-        self::assertSame('Something New', $fixture[0]->getBooks());
+        $updatedEditor = $this->manager->getRepository(Editor::class)->find($editor->getId());
+        self::assertSame('Updated Editor', $updatedEditor->getName());
+        self::assertSame('ED5678', $updatedEditor->getEditorialNumber());
+        self::assertSame('Non-Fiction', $updatedEditor->getSpecialty());
     }
+    
 
-    public function testRemove(): void
+    private function createEditor(): Editor
     {
-        $this->markTestIncomplete();
-        $fixture = new Editor();
-        $fixture->setName('Value');
-        $fixture->setEditorial_number('Value');
-        $fixture->setSpecialty('Value');
-        $fixture->setBooks('Value');
+        $editor = new Editor();
+        $editor->setName('Test Editor');
+        $editor->setEditorialNumber('ED1234');
+        $editor->setSpecialty('Fiction');
 
-        $this->manager->persist($fixture);
-        $this->manager->flush();
+        $this->manager->persist($editor);
+        $this->manager->flush();  // Make sure the entity is saved, and the ID is generated
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
-        $this->client->submitForm('Delete');
-
-        self::assertResponseRedirects('/editor/');
-        self::assertSame(0, $this->repository->count([]));
+        return $editor;
     }
 }

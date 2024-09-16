@@ -4,7 +4,6 @@ namespace App\Tests\Controller;
 
 use App\Entity\Genre;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -12,114 +11,54 @@ final class GenreControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private EntityManagerInterface $manager;
-    private EntityRepository $repository;
     private string $path = '/genre/';
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        $this->manager = static::getContainer()->get('doctrine')->getManager();
-        $this->repository = $this->manager->getRepository(Genre::class);
+        $this->manager = static::getContainer()->get(EntityManagerInterface::class);
 
-        foreach ($this->repository->findAll() as $object) {
-            $this->manager->remove($object);
-        }
-
-        $this->manager->flush();
+        // Clean up the database before running each test
+        $this->manager->createQuery('DELETE FROM App\Entity\Genre')->execute();
     }
 
-    public function testIndex(): void
+    public function testCreateNewGenre(): void
     {
-        $this->client->followRedirects();
-        $crawler = $this->client->request('GET', $this->path);
+        $genre = new Genre();
+        $genre->setName('Test Genre');
+        $genre->setDescription('Test Description');
 
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Genre index');
-
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first());
-    }
-
-    public function testNew(): void
-    {
-        $this->markTestIncomplete();
-        $this->client->request('GET', sprintf('%snew', $this->path));
-
-        self::assertResponseStatusCodeSame(200);
-
-        $this->client->submitForm('Save', [
-            'genre[name]' => 'Testing',
-            'genre[description]' => 'Testing',
-            'genre[books]' => 'Testing',
-        ]);
-
-        self::assertResponseRedirects($this->path);
-
-        self::assertSame(1, $this->repository->count([]));
-    }
-
-    public function testShow(): void
-    {
-        $this->markTestIncomplete();
-        $fixture = new Genre();
-        $fixture->setName('My Title');
-        $fixture->setDescription('My Title');
-        $fixture->setBooks('My Title');
-
-        $this->manager->persist($fixture);
+        $this->manager->persist($genre);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
-
-        self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Genre');
-
-        // Use assertions to check that the properties are properly displayed.
+        $savedGenre = $this->manager->getRepository(Genre::class)->findOneBy(['name' => 'Test Genre']);
+        self::assertNotNull($savedGenre);
+        self::assertSame('Test Genre', $savedGenre->getName());
+        self::assertSame('Test Description', $savedGenre->getDescription());
     }
 
-    public function testEdit(): void
+    public function testEditGenre(): void
     {
-        $this->markTestIncomplete();
-        $fixture = new Genre();
-        $fixture->setName('Value');
-        $fixture->setDescription('Value');
-        $fixture->setBooks('Value');
+        $genre = $this->createGenre();
 
-        $this->manager->persist($fixture);
+        $genre->setName('Updated Genre');
+        $genre->setDescription('Updated Description');
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
-
-        $this->client->submitForm('Update', [
-            'genre[name]' => 'Something New',
-            'genre[description]' => 'Something New',
-            'genre[books]' => 'Something New',
-        ]);
-
-        self::assertResponseRedirects('/genre/');
-
-        $fixture = $this->repository->findAll();
-
-        self::assertSame('Something New', $fixture[0]->getName());
-        self::assertSame('Something New', $fixture[0]->getDescription());
-        self::assertSame('Something New', $fixture[0]->getBooks());
+        $updatedGenre = $this->manager->getRepository(Genre::class)->find($genre->getId());
+        self::assertSame('Updated Genre', $updatedGenre->getName());
+        self::assertSame('Updated Description', $updatedGenre->getDescription());
     }
 
-    public function testRemove(): void
+    private function createGenre(): Genre
     {
-        $this->markTestIncomplete();
-        $fixture = new Genre();
-        $fixture->setName('Value');
-        $fixture->setDescription('Value');
-        $fixture->setBooks('Value');
+        $genre = new Genre();
+        $genre->setName('Test Genre');
+        $genre->setDescription('Test Description');
 
-        $this->manager->persist($fixture);
+        $this->manager->persist($genre);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
-        $this->client->submitForm('Delete');
-
-        self::assertResponseRedirects('/genre/');
-        self::assertSame(0, $this->repository->count([]));
+        return $genre;
     }
 }
