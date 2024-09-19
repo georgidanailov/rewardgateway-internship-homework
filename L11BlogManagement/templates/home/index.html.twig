@@ -1,20 +1,75 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Welcome to My Blog{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .hero {
+            background: url('/images/beach.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .card {
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer a {
+            color: #f8f9fa;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="hero">
+        <div class="container">
+            <h1>Welcome to My Blog</h1>
+            <p>Discover the latest posts, insights, and more.</p>
+            <a href="{{ path('app_post_index') }}" class="btn btn-primary btn-lg">Explore Posts</a>
+        </div>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/georgi.simeonov/Documents/InternshipProjects/lecturespractice/L11BlogManagement/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>/Users/georgi.simeonov/Documents/InternshipProjects/lecturespractice/L11BlogManagement/templates/home/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="container mt-5">
+        <h2 class="section-title">Recent Posts</h2>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.name }}</h5>
+                            <p class="card-text">{{ post.description|slice(0, 100) }}...</p>
+                            <a href="{{ path('app_post_show', {'id': post.id}) }}" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No posts available at the moment. Check back later!</p>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

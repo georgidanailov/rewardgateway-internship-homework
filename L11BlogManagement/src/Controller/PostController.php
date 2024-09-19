@@ -37,6 +37,10 @@ class PostController extends AbstractController
         // Commented out role checks
         // $this->denyAccessUnlessGranted(['ROLE_AUTHOR', 'ROLE_ADMIN']);
 
+        if (!$this->getUser()) {
+            throw $this->createAccessDeniedException('You must be logged in to create a post.');
+        }
+
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -69,7 +73,7 @@ class PostController extends AbstractController
 
         return $this->render('post/show.html.twig', [
             'post' => $post,
-            'delete_post_form' => $deletePostForm->createView(),
+            'delete_form' => $deletePostForm->createView(),
             'delete_comment_forms' => $deleteCommentForms,
         ]);
     }
@@ -98,7 +102,7 @@ class PostController extends AbstractController
         return $this->render('post/edit.html.twig', [
             'post' => $post,
             'form' => $form->createView(),
-            'delete_post_form' => $deletePostForm->createView(),
+            'delete_form' => $deletePostForm->createView(),
         ]);
     }
 

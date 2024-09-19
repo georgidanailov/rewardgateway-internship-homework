@@ -28,11 +28,17 @@
         }
 
         main {
-            flex: 1; /* Ensures the main content takes up the remaining space */
+            flex: 1;
         }
 
         .footer {
-            background-color: #f5f5f5;
+            background-color: #343a40;
+            color: white;
+        }
+
+        .footer a {
+            color: #f8f9fa;
+            text-decoration: none;
         }
     </style>
 
@@ -90,7 +96,28 @@
 
 <footer class="footer mt-auto py-3">
     <div class="container">
-        <span class="text-muted">© 2024 My Blog</span>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>About Us</h5>
+                <p>We are a team of passionate writers sharing our thoughts and ideas on various topics.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{{ path('app_post_index') }}">Posts</a></li>
+                    <li><a href="{{ path('app_register') }}">Register</a></li>
+                    <li><a href="{{ path('app_login') }}">Login</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Us</h5>
+                <p>Email: contact@ourblog.com</p>
+                <p>Phone: +1 234 567 890</p>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <p>&copy; 2024 My Blog. All Rights Reserved.</p>
+        </div>
     </div>
 </footer>
 
