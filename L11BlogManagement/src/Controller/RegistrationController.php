@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/RegistrationController.php
-
 namespace App\Controller;
 
 use App\Entity\User;
@@ -18,14 +16,23 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator): Response
+    public function register(
+        Request                     $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface      $entityManager,
+        UserAuthenticatorInterface  $userAuthenticator,
+        LoginFormAuthenticator      $authenticator
+    ): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // Assign ROLE_USER by default
+            $user->setRoles(['ROLE_USER']);
+
+            // Encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -36,15 +43,12 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // auto-login the user after registration
+            // Auto-login the user after registration
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
                 $request
             );
-
-            // Or redirect to another route
-            // return $this->redirectToRoute('app_home');
         }
 
         return $this->render('registration/register.html.twig', [

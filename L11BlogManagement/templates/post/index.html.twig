@@ -3,16 +3,41 @@
 {% block title %}Posts{% endblock %}
 
 {% block body %}
-    <h1>Posts</h1>
+    <div class="container mt-5">
+        <h1>Posts</h1>
 
-    {% for post in posts %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">{{ post.title }}</h5>
-                <p class="card-text">{{ post.content }}</p>
-            </div>
-        </div>
-    {% else %}
-        <p>No posts found.</p>
-    {% endfor %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.name }}</td>
+                    <td>{{ post.user.name }}</td>
+                    <td>{{ post.dateAdded|date('Y-m-d H:i:s') }}</td>
+                    <td>
+                        <a href="{{ path('app_post_show', {'id': post.id}) }}" class="btn btn-info btn-sm">View</a>
+                        <a href="{{ path('app_post_edit', {'id': post.id}) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                        {{ form_start(delete_forms[post.id]) }}
+                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                        {{ form_end(delete_forms[post.id]) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No posts found.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_post_new') }}" class="btn btn-primary mt-3">Create new post</a>
+    </div>
 {% endblock %}
