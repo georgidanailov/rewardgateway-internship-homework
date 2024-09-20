@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Comment{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Create a New Comment</h1>
+
+        {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.content) }}
+            {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.content) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.rating) }}
+            {{ form_widget(form.rating, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.rating) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_post_show', {'id': comment.post.getId()}) }}" class="btn btn-secondary mt-3">Back to
+            Post</a>
+    </div>
+{% endblock %}

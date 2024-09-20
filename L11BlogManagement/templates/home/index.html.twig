@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome to My Blog{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .hero {
+            background: url('/images/beach.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .card {
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer a {
+            color: #f8f9fa;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="hero">
+        <div class="container">
+            <h1>Welcome to My Blog</h1>
+            <p>Discover the latest posts, insights, and more.</p>
+            <a href="{{ path('app_post_index') }}" class="btn btn-primary btn-lg">Explore Posts</a>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="section-title">Recent Posts</h2>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.name }}</h5>
+                            <p class="card-text">{{ post.description|slice(0, 100) }}...</p>
+                            <a href="{{ path('app_post_show', {'id': post.id}) }}" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>No posts available at the moment. Check back later!</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

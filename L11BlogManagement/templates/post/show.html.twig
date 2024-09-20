@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.name }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>{{ post.name }}</h1>
+
+        <p><strong>Description:</strong></p>
+        <p>{{ post.description }}</p>
+
+        <p><strong>Author:</strong> {{ post.user.name }}</p>
+        <p><strong>Date Added:</strong> {{ post.dateAdded|date('Y-m-d H:i:s') }}</p>
+
+        <h2>Comments</h2>
+
+        {% for comment in post.comments %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <p><strong>{{ comment.user.name }}</strong> rated this {{ comment.rating }}/5</p>
+                    <p>{{ comment.content }}</p>
+                    <p><small>Added on {{ comment.dateAdded|date('Y-m-d H:i:s') }}</small></p>
+
+                    {% if comment.user == app.user or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_comment_edit', {'id': comment.id}) }}"
+                           class="btn btn-warning btn-sm">Edit</a>
+                        {{ form_start(delete_comment_forms[comment.id]) }}
+                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                        {{ form_end(delete_comment_forms[comment.id]) }}
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <p>No comments yet.</p>
+        {% endfor %}
+
+        <h3>Add a Comment</h3>
+        <a href="{{ path('app_comment_new', {'post': post.id}) }}" class="btn btn-primary">Add Comment</a>
+
+        <a href="{{ path('app_post_index') }}" class="btn btn-secondary mt-3">Back to list</a>
+    </div>
+{% endblock %}
