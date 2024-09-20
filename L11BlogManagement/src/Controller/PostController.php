@@ -35,7 +35,7 @@ class PostController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         // Commented out role checks
-        // $this->denyAccessUnlessGranted(['ROLE_AUTHOR', 'ROLE_ADMIN']);
+        $this->denyAccessUnlessGranted('ROLE_AUTHOR');
 
         if (!$this->getUser()) {
             throw $this->createAccessDeniedException('You must be logged in to create a post.');
@@ -82,7 +82,7 @@ class PostController extends AbstractController
     public function edit(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
         // Commented out role checks
-        // $this->denyAccessUnlessGranted(['ROLE_AUTHOR', 'ROLE_ADMIN']);
+        $this->denyAccessUnlessGranted(['ROLE_AUTHOR', 'ROLE_ADMIN']);
 
         if ($post->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('You do not have permission to edit this post.');
@@ -110,7 +110,7 @@ class PostController extends AbstractController
     public function delete(Request $request, Post $post, EntityManagerInterface $entityManager): Response
     {
         // Commented out role checks
-        // $this->denyAccessUnlessGranted(['ROLE_AUTHOR', 'ROLE_ADMIN']);
+        $this->denyAccessUnlessGranted(['ROLE_AUTHOR', 'ROLE_ADMIN']);
 
         if ($post->getUser() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('You do not have permission to delete this post.');
