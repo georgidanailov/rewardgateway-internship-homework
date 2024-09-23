@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
 use App\Entity\Category;
+use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
@@ -19,18 +21,44 @@ class ProductController extends AbstractController
         $this->em = $em;
     }
 
+    #[Route('/product', name: 'product_index', methods: ['GET'])]
+    public function index(Request $request): Response
+    {
+        $page = $request->query->getInt('page', 1);
+        $limit = 3;
+
+        $query = $this->em->getRepository(Product::class)
+            ->createQueryBuilder('p')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        $paginator = new Paginator($query);
+
+        return $this->render('product/index.html.twig', [
+            'products' => $paginator,
+            'currentPage' => $page,
+            'totalPages' => ceil(count($paginator) / $limit),
+        ]);
+    }
+
     #[Route('/api/products', name: 'create_product', methods: ['POST'])]
     public function createProduct(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        if (empty($data['name']) || empty($data['price']) || empty($data['quantity']) || empty($data['category_id'])) {
-            return $this->json(['error' => 'Missing required fields'], 400);
+        if (empty($data['name']) || empty($data['price']) || empty($data['quantity'])) {
+            return $this->json(['error' => 'Product name, price, and quantity are required'], 400);
+        }
+
+        if (!isset($data['category_id'])) {
+            return $this->json(['error' => 'Category ID is required'], 400);
         }
 
         $category = $this->em->getRepository(Category::class)->find($data['category_id']);
+
         if (!$category) {
-            return $this->json(['error' => 'Category not found'], 404);
+            return $this->json(['error' => 'Invalid category ID'], 400);
         }
 
         $product = new Product();
@@ -53,6 +81,7 @@ class ProductController extends AbstractController
     public function getProducts(): JsonResponse
     {
         $products = $this->em->getRepository(Product::class)->findAll();
+
         return $this->json($products, 200);
     }
 
@@ -97,10 +126,11 @@ class ProductController extends AbstractController
 
         if (isset($data['category_id'])) {
             $category = $this->em->getRepository(Category::class)->find($data['category_id']);
-            if (!$category) {
-                return $this->json(['error' => 'Category not found'], 404);
+            if ($category) {
+                $product->setCategory($category);
+            } else {
+                return $this->json(['error' => 'Invalid category ID'], 400);
             }
-            $product->setCategory($category);
         }
 
         $this->em->flush();
@@ -123,3 +153,4 @@ class ProductController extends AbstractController
         return $this->json(['message' => 'Product deleted successfully!'], 200);
     }
 }
+
