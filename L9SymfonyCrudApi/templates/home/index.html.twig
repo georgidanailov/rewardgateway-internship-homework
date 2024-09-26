@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <style>
+        body {
+            background-color: #0e0e10;
+            color: #fff;
+        }
+
+        .image-container {
+            background-image: url('{{ asset('images/berserk.jpeg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <div class="container">
+        <div class="image-container"></div>
+        <h1 class="text-center my-4">Welcome to My Symfony App</h1>
+        <p class="lead text-center">This is your homepage. Navigate using the menu above.</p>
+    </div>
+{% endblock %}
