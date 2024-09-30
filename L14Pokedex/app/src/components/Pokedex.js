@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 
 const Pokedex = () => {
     const [pokemons, setPokemons] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const currentPage = parseInt(searchParams.get("page") || 1);
 
     const fetchPokemons = async (page) => {
         const limit = 12;
@@ -28,6 +30,10 @@ const Pokedex = () => {
     useEffect(() => {
         fetchPokemons(currentPage);
     }, [currentPage]);
+
+    const handlePageChange = (newPage) => {
+        setSearchParams({page: newPage});
+    };
 
     return (
         <div className="pokedex">
@@ -55,14 +61,14 @@ const Pokedex = () => {
             </div>
             <div className="pagination">
                 <button
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
                     disabled={currentPage === 1}
                 >
                     Previous
                 </button>
                 <span>Page {currentPage} of {totalPages}</span>
                 <button
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
                     disabled={currentPage === totalPages}
                 >
                     Next
