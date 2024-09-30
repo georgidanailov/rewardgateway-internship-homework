@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 
 const PokemonDetail = () => {
     const {name} = useParams();
     const [pokemon, setPokemon] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPokemonDetails = async () => {
@@ -19,6 +20,9 @@ const PokemonDetail = () => {
 
     return (
         <div className="pokemon-detail">
+            <button onClick={() => navigate(-1)} className="back-button">
+                ⬅️ Back
+            </button>
             <h1>{pokemon.name}</h1>
             <img
                 src={pokemon.sprites.front_default}
