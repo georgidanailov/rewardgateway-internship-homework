@@ -26,7 +26,7 @@ class Product
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'accessTest')]
+    #[ORM\ManyToOne()]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
