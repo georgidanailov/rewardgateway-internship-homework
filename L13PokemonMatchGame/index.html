@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Memory Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="game-container">
+    <h1>Pokémon Memory Game</h1>
+    <div class="controls">
+        <label for="grid-size">Grid Size:</label>
+        <select id="grid-size">
+            <option value="4x4">4x4</option>
+            <option value="6x6">6x6</option>
+            <option value="2x3">2x3</option>
+        </select>
+        <p>Score: <span id="score">0</span></p>
+        <p>Time: <span id="timer">60</span> seconds</p>
+        <button id="restart-button">Restart Game</button>
+    </div>
+    <div class="grid-container" id="grid">
+
+    </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
