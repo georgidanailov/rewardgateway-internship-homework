@@ -1,0 +1,245 @@
+.pokedex {
+    text-align: center;
+    padding: 20px;
+}
+
+.pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.pokemon-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+    max-width: 200px;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-10px);
+}
+
+.pokemon-card img {
+    width: 120px;
+    height: 120px;
+}
+
+.pokemon-card h3 {
+    margin: 10px 0;
+    text-transform: capitalize;
+}
+
+.pokemon-card span {
+    font-size: 12px;
+    color: #555;
+}
+
+.pokemon-types {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pokemon-type {
+    padding: 5px 10px;
+    border-radius: 8px;
+    margin-right: 5px;
+    font-size: 12px;
+    text-transform: capitalize;
+    color: #fff;
+}
+
+.pokemon-type:last-child {
+    margin-right: 0;
+}
+
+.pokemon-type.grass {
+    background-color: #78c850;
+}
+
+.pokemon-type.poison {
+    background-color: #a040a0;
+}
+
+.pokemon-type.fire {
+    background-color: #f08030;
+}
+
+.pokemon-type.water {
+    background-color: #6890f0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #f04e30;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #d9432a;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pokemon-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pokemon-detail h1 {
+    text-transform: capitalize;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.pokemon-image {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+.pokemon-stats {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.pokemon-stats th, .pokemon-stats td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.pokemon-stats th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.back-button {
+    background-color: #f04e30;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #d9432a;
+}
+
+.pokemon-types {
+    margin-top: 20px;
+}
+
+.pokemon-type {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: white;
+    text-transform: capitalize;
+}
+
+.pokemon-type.grass {
+    background-color: #78c850;
+}
+
+.pokemon-type.poison {
+    background-color: #a040a0;
+}
+
+.pokemon-type.fire {
+    background-color: #f08030;
+}
+
+.pokemon-type.water {
+    background-color: #6890f0;
+}
+
+.pokemon-type.bug {
+    background-color: #a8b820;
+}
+
+.pokemon-type.normal {
+    background-color: #a8a878;
+}
+
+.pokemon-type.electric {
+    background-color: #f8d030;
+}
+
+.pokemon-type.ground {
+    background-color: #e0c068;
+}
+
+.pokemon-type.fairy {
+    background-color: #ee99ac;
+}
+
+.pokemon-type.fighting {
+    background-color: #c03028;
+}
+
+.pokemon-type.psychic {
+    background-color: #f85888;
+}
+
+.pokemon-type.rock {
+    background-color: #b8a038;
+}
+
+.pokemon-type.ghost {
+    background-color: #705898;
+}
+
+.pokemon-type.ice {
+    background-color: #98d8d8;
+}
+
+.pokemon-type.dragon {
+    background-color: #7038f8;
+}
+
+.pokemon-type.dark {
+    background-color: #705848;
+}
+
+.pokemon-type.steel {
+    background-color: #b8b8d0;
+}
+
+.pokemon-type.flying {
+    background-color: #a890f0;
+}
