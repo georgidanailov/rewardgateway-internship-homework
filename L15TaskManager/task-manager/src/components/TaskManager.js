@@ -15,7 +15,9 @@ const TaskManager = () => {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        if (tasks.length > 0) {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
     }, [tasks]);
 
     const addTask = (task) => {
