@@ -30,3 +30,17 @@ application leverages Bootstrap for styling and utilizes localStorage to persist
 - **Click "Edit" to modify a task.**
 - **Click "Delete" to remove a task.**
 - **Use the search bar to filter tasks by title.**
+
+## Test
+
+To run the tests with Jest use the following command:
+
+```bash
+   npm test
+   ```
+
+This will run the tests plus coverage:
+
+```bash
+   npm test -- --coverage
+   ```
