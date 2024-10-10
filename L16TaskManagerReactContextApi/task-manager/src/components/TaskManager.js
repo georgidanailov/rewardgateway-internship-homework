@@ -6,7 +6,7 @@ import {TaskContext} from '../context/TaskContext';
 import '../App.css';
 
 const TaskManager = () => {
-    const {tasks} = useContext(TaskContext); // Use tasks from context
+    const {tasks} = useContext(TaskContext);
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredTasks = tasks.filter(task =>

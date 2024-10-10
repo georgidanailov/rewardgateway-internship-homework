@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {TaskContext} from '../context/TaskContext';
 
 const TaskList = ({tasks}) => {
-    const {deleteTask, editTask} = useContext(TaskContext); // Use deleteTask, editTask from context
+    const {deleteTask, editTask} = useContext(TaskContext);
 
     return (
         <ul className="list-group">
